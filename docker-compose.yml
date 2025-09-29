@@ -2,7 +2,6 @@ services:
   airflow-webserver:
     build: .
     image: custom-airflow-axatesting
-    entrypoint: /entrypoint.sh
     restart: unless-stopped
     environment:
       - AIRFLOW__CORE__EXECUTOR=LocalExecutor
@@ -17,7 +16,6 @@ services:
       - ./logs:/opt/airflow/logs
       - /mnt/recordings:/mnt/recordings:ro
       - ./.env:/opt/airflow/.env
-      - ./entrypoint.sh:/entrypoint.sh
     ports:
       - "8080:8080"
     healthcheck:
@@ -36,7 +34,6 @@ services:
   airflow-scheduler:
     build: .
     image: custom-airflow-axatesting
-    entrypoint: /entrypoint.sh
     restart: unless-stopped
     environment:
       - AIRFLOW__CORE__EXECUTOR=LocalExecutor
@@ -50,7 +47,6 @@ services:
       - /mnt/recordings:/mnt/recordings:ro
       - ./logs:/opt/airflow/logs
       - ./.env:/opt/airflow/.env
-      - ./entrypoint.sh:/entrypoint.sh
     healthcheck:
       test: ["CMD-SHELL", "airflow jobs check --job-type SchedulerJob --hostname $$HOSTNAME"]
       interval: 30s

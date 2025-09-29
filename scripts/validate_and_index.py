@@ -60,7 +60,7 @@ def parse_xml(file_path):
         log(f"[ERROR] Failed to parse {file_path}: {str(e)}", level='error')
         return None
 
-def index_files(storage_path="/mnt/recordings"): #CHANGE THE DIRECTORY PATH
+def index_files(storage_path="/mnt/recordings"):
     conn = None
     has_errors = False
     try:

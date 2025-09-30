@@ -9,9 +9,13 @@ RUN apt-get update && \
     libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt .
-RUN pip install --user --no-cache-dir -r requirements.txt
+RUN pip install --user --no-cache-dir \
+    "apache-airflow[amazon,postgres]==2.10.3" \
+    --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-2.10.3/constraints-3.10.txt"
 
+COPY requirements.txt .
+RUN pip install --user --no-cache-dir --no-deps -r requirements.txt || \
+    pip install --user --no-cache-dir -r requirements.txt
 
 
 FROM python:3.10-slim
